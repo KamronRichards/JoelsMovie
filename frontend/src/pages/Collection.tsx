@@ -1,17 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../styles.css';
 import { Movie } from '../types/movie';
 
 function MovieList() {
   const [movieData, setmovieData] = useState<Movie[]>([]);
 
-  const fetchMovie = async () => {
-    const rsp = await fetch('https://localhost:7121/movie');
-    const temp = await rsp.json();
-    setmovieData(temp);
-  };
-
-  fetchMovie();
+  useEffect(() => {
+    const fetchMovie = async () => {
+      const rsp = await fetch('https://localhost:4000/movie');
+      const temp = await rsp.json();
+      setmovieData(temp);
+    };
+    fetchMovie();
+  }, []);
 
   return (
     <>
@@ -25,6 +26,8 @@ function MovieList() {
               <th>Rating</th>
               <th>Category</th>
               <th>Edited</th>
+              <th>Lent to</th>
+              <th>Notes</th>
             </tr>
           </thead>
           <tbody>
@@ -36,6 +39,8 @@ function MovieList() {
                 <td>{m.rating}</td>
                 <td>{m.category}</td>
                 <td>{m.edited}</td>
+                <td>{m.lentto}</td>
+                <td>{m.notes}</td>
               </tr>
             ))}
           </tbody>
