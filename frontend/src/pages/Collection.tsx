@@ -1,11 +1,17 @@
-import data from '../MovieDate.json';
 import { useState } from 'react';
 import '../styles.css';
+import { Movie } from '../types/movie';
 
-const MDS = data.MovieDataList;
+function MovieList() {
+  const [movieData, setmovieData] = useState<Movie[]>([]);
 
-export default function Collection() {
-  const [listOfMovies, setListOfMovies] = useState(MDS);
+  const fetchMovie = async () => {
+    const rsp = await fetch('https://localhost:7121/movie');
+    const temp = await rsp.json();
+    setmovieData(temp);
+  };
+
+  fetchMovie();
 
   return (
     <>
@@ -22,14 +28,14 @@ export default function Collection() {
             </tr>
           </thead>
           <tbody>
-            {listOfMovies.map((m) => (
+            {movieData.map((m) => (
               <tr>
-                <td>{m.Title}</td>
-                <td>{m.Year}</td>
-                <td>{m.Director}</td>
-                <td>{m.Rating}</td>
-                <td>{m.Category}</td>
-                <td>{m.Edited}</td>
+                <td>{m.title}</td>
+                <td>{m.year}</td>
+                <td>{m.director}</td>
+                <td>{m.rating}</td>
+                <td>{m.category}</td>
+                <td>{m.edited}</td>
               </tr>
             ))}
           </tbody>
@@ -38,3 +44,5 @@ export default function Collection() {
     </>
   );
 }
+
+export default MovieList;

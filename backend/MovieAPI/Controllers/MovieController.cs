@@ -3,6 +3,8 @@ using MovieAPI.Models;
 
 namespace MovieAPI.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class MovieController : Controller
     {
         private JoelHiltonMovieCollectionContext context;
